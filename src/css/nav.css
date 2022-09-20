@@ -1,0 +1,75 @@
+.background_nav {
+  margin: 0px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo_nav {
+  margin-left: 10px;
+  height: 60px;
+}
+
+.search_layout {
+  width: 70%;
+  text-align: center;
+}
+
+.search_input {
+  width: 70%;
+  margin-left: 10px;
+  padding: 10px 0px;
+  /* border: 2px solid rgb(53, 53, 53, 0.7); */
+  border: none;
+  border-radius: 5px;
+  text-indent: 20px;
+}
+
+.search_btn {
+  padding: 10px 20px;
+  margin-left: 20px;
+  background-color: rgb(188, 2, 212);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+.login_btn {
+  padding: 10px 30px;
+  margin-right: 20px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: main;
+  font-size: larger;
+}
+
+.greeting > p {
+  margin-right: 20px;
+
+  color: #fff;
+}
+
+.greeting > button {
+  padding: 10px 20px;
+  margin-right: 20px;
+  color: #fff;
+  background-color: blue;
+  border: none;
+  border-radius: 5px;
+}
