@@ -6,17 +6,14 @@ function Test() {
   const onChange = (event) => setWord(event.target.value);
   const onSubmit = (event) => {
     event.preventDefault();
-    const postData = {
-      text: word,
-    };
-
-    fetch("http://localhost:4000/testAPI", {
-      method: "POST",
+    fetch(`http://localhost:4000/Profiles?userID=${word}`, {
+      method: "GET",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(postData),
-    });
+    })
+      .then((res) => res.json())
+      .then((json) => console.log(json));
   };
 
   return (

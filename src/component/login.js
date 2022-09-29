@@ -20,18 +20,21 @@ function Login() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(`${JsonServer}/${userID}`)
+    fetch(JsonServer, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        userID: userID,
+        userPW: userPW,
+      }),
+    })
       .then((res) => res.json())
       .then((json) => {
-        if (json.id === undefined) {
-          alert("id 또는 password가 잘못 입력되었습니다.");
-        } else if (json.password !== userPW) {
-          alert("id 또는 password가 잘못 입력되었습니다.");
-        } else {
-          alert("로그인성공!");
-          localStorage.setItem(USERNAME, userID);
-          navigate(`/`);
-        }
+        console.log(json);
+        localStorage.setItem(USERNAME, userID);
+        navigate(`/`);
       });
   };
 
