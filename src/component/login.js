@@ -9,7 +9,7 @@ import "../css/default.css";
 function Login() {
   const [userID, setUserID] = useState("");
   const [userPW, setUserPW] = useState("");
-  const JsonServer = "http://localhost:4000/Profiles";
+  const URL = "http://localhost:4000";
   const USERNAME = "USERNAME";
 
   // 로그인 점검 로직 성공 시 localStorage 내 ID 정보 저장.
@@ -20,7 +20,7 @@ function Login() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(JsonServer, {
+    fetch(`${URL}/Profiles`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -31,10 +31,15 @@ function Login() {
       }),
     })
       .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        localStorage.setItem(USERNAME, userID);
-        navigate(`/`);
+      .then((data) => {
+        console.log(data.ok);
+        if (data.ok === false) {
+          alert(`${data.error}`);
+        } else {
+          alert("로그인성공~");
+          localStorage.setItem(USERNAME, userID);
+          navigate(`/`);
+        }
       });
   };
 
@@ -49,18 +54,44 @@ function Login() {
   };
 
   // 회원가입 기능 제작중 (함수실행순서의 문제)
-  const URL = "http://localhost:4000/Profiles";
+
   const [newID, setNewID] = useState(null);
   const [newPW, setNewPW] = useState(null);
   const [rePW, setRePW] = useState(null);
   const [newEmail, setNewEmail] = useState(null);
-  const [newNicName, setNewNicName] = useState(null);
+  const [newNic, setNewNic] = useState(null);
 
   const onNewID = (event) => setNewID(event.target.value);
   const onNewPW = (event) => setNewPW(event.target.value);
   const onRePW = (event) => setRePW(event.target.value);
   const onEmail = (event) => setNewEmail(event.target.value);
-  const onNewName = (event) => setNewNicName(event.target.value);
+  const onNewNic = (event) => setNewNic(event.target.value);
+
+  const singUpSubmit = (event) => {
+    event.preventDefault();
+    fetch(`${URL}/singup`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        newID: newID,
+        newPW: newPW,
+        rePW: rePW,
+        newNic: newNic,
+        newEmail: newEmail,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.ok === true) {
+          alert("회원가입 성공");
+        } else {
+          alert(`${data.error}`);
+        }
+      });
+  };
 
   return (
     <article>
@@ -120,7 +151,7 @@ function Login() {
         </section>
         {/* 회원가입 기능 */}
         <section ref={singUpRef} className="none">
-          <form className="flex_column sign_Up">
+          <form onSubmit={singUpSubmit} className="flex_column sign_Up">
             <input onChange={onNewID} placeholder="newID"></input>
             <input
               onChange={onNewPW}
@@ -129,7 +160,7 @@ function Login() {
             ></input>
             <input onChange={onRePW} type="password" placeholder="rePW"></input>
             <input onChange={onEmail} placeholder="email-address"></input>
-            <input onChange={onNewName} placeholder="name"></input>
+            <input onChange={onNewNic} placeholder="name"></input>
             <button>회원가입</button>
           </form>
         </section>

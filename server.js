@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(cors());
 
 const bodyParser = require("body-parser");
+const { findAllByDisplayValue } = require("@testing-library/react");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -87,11 +88,61 @@ const dataJson = {
   ],
 };
 
+//로그인 로직
 app.post("/Profiles", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { userID, userPW } = req.body;
-  console.log(userID, userPW);
-  if (dataJson.filter((data) => data.id === userID) === null) {
+  // console.log(userID, userPW);
+  const userInfo = dataJson.Profiles.filter((ID) => ID.id === userID);
+  const checkID = userInfo[0]?.id === userID;
+  const checkPW = userInfo[0]?.password === userPW;
+  console.log(`ID확인 : ${checkID}, PW확인 : ${checkPW}`);
+
+  if (checkID === false) {
+    res.json({
+      ok: false,
+      error: "일치하는 ID가 없습니다. 다시 확인해주세요.",
+    });
+  } else if (checkPW === false) {
+    res.json({
+      ok: false,
+      error: "일치하는 PW가 없습니다. 다시 확인해주세요.",
+    });
+  } else {
+    res.json({ ok: true });
+  }
+});
+
+// 회원가입 로직
+// 해결해야할점
+// 1. 빈값이 전달되었을때 검증
+// 2. json 데이터 내 회원정보 추가 및 저장
+// 추후 기능업그레이드 사항
+// 1. 캡챠
+// 2. 외부 API 계정 연동 (google, github, kakao ...)
+app.post("/singup", (req, res) => {
+  const { newID, newPW, rePW, newNic, newEmail } = req.body;
+  console.log(newID, newPW, rePW, newNic, newEmail);
+
+  // 1. ID 중복체크
+  const checkID = dataJson.Profiles.filter((value) => value.id === newID);
+  // 2. Nic 중복체크
+  const checkNic = dataJson.Profiles.filter((value) => value.name === newNic);
+  // 3. Email 중복체크
+  const checkEmail = dataJson.Profiles.filter(
+    (value) => value.email === newEmail
+  );
+
+  if (checkID.length !== 0) {
+    res.json({ ok: false, error: "ID가 중복입니다." });
+  } else if (checkNic.length !== 0) {
+    res.json({ ok: false, error: "nicname 이 중복입니다." });
+  } else if (checkEmail.length !== 0) {
+    res.json({ ok: false, error: "email이 중복입니다." });
+  } else if (newPW !== rePW) {
+    res.json({ ok: false, error: "password 가 일치하지 않습니다." });
+  } else {
+    res.json({ ok: true });
   }
 });
 
