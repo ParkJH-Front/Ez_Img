@@ -47,9 +47,12 @@ function ImgRander(props) {
 
   /** 스크랩 버튼 클릭 시 URL 사용자에 저장 */
   const USERNAME = "USERNAME";
-  const jsonServer = "https://ez-img.herokuapp.com/";
+  const jsonServer = "http://localhost:4000";
   const onScrap = (img) => {
     const user = localStorage.getItem(USERNAME);
+    console.log(img);
+    console.log(`${jsonServer}/Profiles/${user}`);
+
     fetch(`${jsonServer}/scrap`, {
       method: "post",
       headers: {
