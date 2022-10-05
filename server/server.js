@@ -11,12 +11,13 @@ app.use(bodyParser.json());
 
 const fs = require("fs");
 
-const port = process.env.PORT || 4000;
+const port = 4000;
 
 // json data file read
 const dataBuffer = fs.readFileSync(__dirname + "/data_json.json");
 const datalow = dataBuffer.toString();
 const dataJson = JSON.parse(datalow);
+console.log(dataJson.Profiles);
 
 //로그인 로직
 app.post("/Profiles", (req, res) => {
@@ -111,13 +112,22 @@ app.post("/scrap", (req, res) => {
 
 // react_build import
 // 1. build 에 있는 파일에 접근할 수 있도록 설정
-app.use(express.static("build"));
+////app.use(express.static("build"));
 // 2. "/"(루트) 접근 시 build/index.html 을 보여줄 수 있도록 설정
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/build/index.html");
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname + "/build/index.html");
+// });
 
 // http listen port 생성 서버 실행
 app.listen(port, () => {
   console.log("express active");
 });
+
+// 배포 과정 (자동배포)
+// hosting : heroku
+// 0. client 폴더로 이동
+// 1. npm ci (node_module 폴더 생성)
+// 2. npm run build (build 파일 생성)
+// 3. server 폴더로 이동
+// 4. npm ci
+// 5. node server.js 실행

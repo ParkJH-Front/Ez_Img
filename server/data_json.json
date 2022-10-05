@@ -1,1 +1,12 @@
-[{"id":"test","password":"test1234","email":"test@test.com","name":"test00","scrapImg":"http://t1.daumcdn.net/encyclop/m74/6LqaLGshJnr1kfKHz2uQ32xkAJoe529TONOTxlrj","scrap":"https://t1.daumcdn.net/news/202010/11/ilgansports/20201011083633998nxba.jpg"}]
+{
+  "Profiles": [
+    {
+      "id": "test",
+      "password": "test1234",
+      "email": "test@test.com",
+      "name": "test00",
+      "scrapImg": "http://t1.daumcdn.net/encyclop/m74/6LqaLGshJnr1kfKHz2uQ32xkAJoe529TONOTxlrj",
+      "scrap": "https://t1.daumcdn.net/news/202010/11/ilgansports/20201011083633998nxba.jpg"
+    }
+  ]
+}

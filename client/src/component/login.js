@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../img/logo_nukki.png";
 import backgroundImg from "../img/background.jpg";
@@ -9,7 +9,7 @@ import "../css/default.css";
 function Login() {
   const [userID, setUserID] = useState("");
   const [userPW, setUserPW] = useState("");
-  const URL = "http://localhost:4000";
+  const APISERVER = "http://localhost:4000";
   const USERNAME = "USERNAME";
 
   // 로그인 점검 로직 성공 시 localStorage 내 ID 정보 저장.
@@ -20,7 +20,7 @@ function Login() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(`${URL}/Profiles`, {
+    fetch(`${APISERVER}/Profiles`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -69,7 +69,7 @@ function Login() {
 
   const singUpSubmit = (event) => {
     event.preventDefault();
-    fetch(`${URL}/singup`, {
+    fetch(`${APISERVER}/singup`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
