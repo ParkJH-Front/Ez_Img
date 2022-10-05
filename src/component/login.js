@@ -123,24 +123,20 @@ function Login() {
             <div>
               <h1>ez-img 로그인</h1>
             </div>
-            <div>
-              <input
-                onChange={onID}
-                value={userID}
-                placeholder="writh your ID"
-                type="text"
-                required
-              ></input>
-            </div>
-            <div>
-              <input
-                onChange={onPW}
-                value={userPW}
-                placeholder="writh your PW"
-                type="password"
-                required
-              ></input>
-            </div>
+            <input
+              onChange={onID}
+              value={userID}
+              placeholder="write your ID"
+              type="text"
+              required
+            ></input>
+            <input
+              onChange={onPW}
+              value={userPW}
+              placeholder="write your PW"
+              type="password"
+              required
+            ></input>
             <button className="login_box_btn">Enter</button>
           </form>
           <form className="flex_column">

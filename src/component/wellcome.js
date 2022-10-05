@@ -47,7 +47,7 @@ function Wellcome() {
           ></img>
         </section>
         <section>
-          <div className="center_main flex_column">
+          <div className="center_main flex_column title">
             <img className="logo" src={logo}></img>
             <h1>다양한 이미지를 빠르게 찾아보세요.</h1>
             <p>쉽게 찾고, 바로 다운받으세요.</p>

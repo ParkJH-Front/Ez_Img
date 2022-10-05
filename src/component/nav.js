@@ -64,7 +64,7 @@ function Nav() {
             type="text"
             placeholder="    이미지 검색"
           ></input>
-          <button className="search_btn">search</button>
+          <button className="search_btn media-575">search</button>
         </form>
       </section>
       {/* 로그인기능 */}

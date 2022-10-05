@@ -5,11 +5,17 @@
   text-align: center;
   padding: 30px 0px 30px 0px;
   font-family: main;
+  font-size: 30px;
 
   display: flex;
   flex-direction: column;
 }
 
+@media all and (max-width: 575px) {
+  .login_box {
+    font-size: 26px;
+  }
+}
 .background_login {
   position: absolute;
   width: 100%;
@@ -21,15 +27,20 @@
   object-fit: cover;
 }
 
-.flex_column > div > input {
+.flex_column > input {
   background-color: #fff;
-  padding-left: 30px;
-  padding-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  width: 40%;
+  max-width: 200px;
   margin-bottom: 15px;
   border: 1px solid blue;
   border-radius: 5px;
+  text-indent: 10px;
+}
+
+.flex_column > div > h1 {
+  margin-bottom: 30px;
 }
 
 .login_box_btn {
@@ -40,6 +51,7 @@
   border: none;
   border-radius: 5px;
   width: 40%;
+  max-width: 150px;
 }
 
 .show {
