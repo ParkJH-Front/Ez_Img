@@ -43,8 +43,12 @@ function Main() {
     <div>
       <Nav />
       <Suspense fallback={<img className="center" src={Loding} alt="loding" />}>
+        <span>검색결과</span>
         <ImgRander imgURL={imgURL} />
       </Suspense>
+      <div>
+        <button>맨위로</button>
+      </div>
     </div>
   );
 }

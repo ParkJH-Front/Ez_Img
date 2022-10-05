@@ -53,13 +53,14 @@ function ImgRander(props) {
     console.log(img);
     console.log(`${jsonServer}/Profiles/${user}`);
 
-    fetch(`${jsonServer}/Profiles/${user}`, {
-      method: "PATCH",
+    fetch(`${jsonServer}/scrap`, {
+      method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        scrapImg: `${img}`,
+        user: user,
+        imgUrl: img,
       }),
     }).then((res) => console.log(res.json()));
   };

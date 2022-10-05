@@ -86,7 +86,8 @@ function Login() {
       .then((data) => {
         console.log(data);
         if (data.ok === true) {
-          alert("회원가입 성공");
+          alert("회원가입 완료, 다시 로그인하세요.");
+          navigate("/");
         } else {
           alert(`${data.error}`);
         }
@@ -148,15 +149,41 @@ function Login() {
         {/* 회원가입 기능 */}
         <section ref={singUpRef} className="none">
           <form onSubmit={singUpSubmit} className="flex_column sign_Up">
-            <input onChange={onNewID} placeholder="newID"></input>
+            <input
+              onChange={onNewID}
+              placeholder="newID"
+              required
+              pattern=".{6,12}"
+              title="6 ~ 12 사이의 길이로 입력하세요."
+            ></input>
             <input
               onChange={onNewPW}
               type="password"
               placeholder="newPW"
+              required
+              pattern=".{8,}"
+              title="최소 8자리 이상 입력하세요."
             ></input>
-            <input onChange={onRePW} type="password" placeholder="rePW"></input>
-            <input onChange={onEmail} placeholder="email-address"></input>
-            <input onChange={onNewNic} placeholder="name"></input>
+            <input
+              onChange={onRePW}
+              type="password"
+              placeholder="rePW"
+              required
+              pattern=".{8,}"
+              title="최소 8자리 이상 입력하세요."
+            ></input>
+            <input
+              onChange={onEmail}
+              placeholder="email-address"
+              required
+            ></input>
+            <input
+              onChange={onNewNic}
+              placeholder="name"
+              required
+              pattern=".{2,6}"
+              title="2 ~ 6 사이의 길이로 입력하세요."
+            ></input>
             <button>회원가입</button>
           </form>
         </section>
