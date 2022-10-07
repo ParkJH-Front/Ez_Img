@@ -51,7 +51,7 @@ function ImgRander(props) {
   const onScrap = (img) => {
     const user = localStorage.getItem(USERNAME);
     fetch(`${APISERVER}/scrap`, {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -59,7 +59,15 @@ function ImgRander(props) {
         user: user,
         imgUrl: img,
       }),
-    }).then((res) => console.log(res.json()));
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok === true) {
+          alert(`${data.message}`);
+        } else {
+          alert(`${data.error}`);
+        }
+      });
   };
 
   return (

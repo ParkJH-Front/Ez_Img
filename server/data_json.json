@@ -5,8 +5,23 @@
       "password": "test1234",
       "email": "test@test.com",
       "name": "test00",
-      "scrapImg": "http://t1.daumcdn.net/encyclop/m74/6LqaLGshJnr1kfKHz2uQ32xkAJoe529TONOTxlrj",
-      "scrap": "https://t1.daumcdn.net/news/202010/11/ilgansports/20201011083633998nxba.jpg"
+      "scrap": [
+        "https://t1.daumcdn.net/news/202205/03/cosmopolitan/20220503100115545obga.jpg",
+        "https://t1.daumcdn.net/news/202206/24/starnews/20220624182125208xhkh.jpg",
+        "https://t1.daumcdn.net/news/202109/01/moneyweek/20210901000700533wyyy.jpg",
+        "https://k.kakaocdn.net/dn/xPypR/btrMjRDBfpN/HcHphXk3KQGf2lgkAuGYn1/img.jpg",
+        "https://k.kakaocdn.net/dn/5bj08/btrgQA5k16q/WwaAb5M19svpSXYPzjeM20/img.jpg",
+        "https://k.kakaocdn.net/dn/cPaCnO/btrMdGvciTy/9WPp04Trfvyj1D1aOttKCK/img.jpg"
+      ]
+    },
+    {
+      "id": "testIDID",
+      "password": "testtest",
+      "email": "test@test.test",
+      "name": "test계정",
+      "scrap": [
+        "https://t1.daumcdn.net/news/202206/12/SpoHankook/20220612203349844hxgb.jpg"
+      ]
     }
   ]
 }

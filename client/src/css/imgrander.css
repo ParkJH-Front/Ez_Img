@@ -5,7 +5,7 @@
   position: fixed 고정된 위치에 배치, viewpoint 기준으로 top,left,bottom,right 로 활용; */
 
 .layout_imgbox {
-  margin-top: 150px;
+  margin-top: 50px;
 }
 
 .column_imgBox {

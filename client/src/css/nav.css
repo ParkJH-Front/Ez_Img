@@ -23,7 +23,7 @@
 }
 
 .search_input {
-  width: 70%;
+  width: 60%;
   margin-left: 10px;
   padding: 10px 0px;
   /* border: 2px solid rgb(53, 53, 53, 0.7); */
@@ -41,7 +41,7 @@
   border-radius: 5px;
 }
 
-@media all and (max-width: 575px) {
+@media all and (max-width: 580px) {
   .media-575 {
     display: none;
   }

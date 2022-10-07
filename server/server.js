@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const fs = require("fs");
+const { json } = require("body-parser");
 
 const port = 4000;
 
@@ -17,13 +18,10 @@ const port = 4000;
 const dataBuffer = fs.readFileSync(__dirname + "/data_json.json");
 const datalow = dataBuffer.toString();
 const dataJson = JSON.parse(datalow);
-console.log(dataJson.Profiles);
 
 //로그인 로직
 app.post("/Profiles", (req, res) => {
-  // console.log(req.body);
   const { userID, userPW } = req.body;
-  // console.log(userID, userPW);
   const userInfo = dataJson.Profiles.filter((ID) => ID.id === userID);
   const checkID = userInfo[0]?.id === userID;
   const checkPW = userInfo[0]?.password === userPW;
@@ -73,6 +71,7 @@ app.post("/singup", (req, res) => {
       password: newPW,
       email: newEmail,
       name: newNic,
+      scrap: [],
     });
     const jsonFileSave = JSON.stringify(dataJson);
     fs.writeFileSync("data_json.json", jsonFileSave);
@@ -85,22 +84,23 @@ app.post("/singup", (req, res) => {
 // 3. 저장
 app.post("/scrap", (req, res) => {
   const scrapData = req.body;
-  // console.log(req.body);
+  const user = scrapData.user;
+  const imgURL = scrapData.imgUrl;
   // user : null or username , scrapImg : url
-  if ((req.body.user === null) | undefined) {
+  console.log(user, imgURL);
+
+  if ((user === null) | undefined) {
     res.json({ ok: false, error: "로그인 후 이용해주세요." });
   } else {
-    const targetUserData = dataJson.Profiles?.filter(
-      (ID) => ID.id === `${scrapData.user}`
-    );
-    console.log(targetUserData);
-    // const targetUserData = dataJson.Profiles.filter(
-    //   (ID) => ID.id === `${scrapData.user}`
-    // );
-    // targetUserData[0].scrap = `${scrapData.imgUrl}`;
-
-    // const jsonFileSave = JSON.stringify(targetUserData);
-    // fs.writeFileSync("data_json.json", jsonFileSave);
+    const UserData = dataJson.Profiles.filter((ID) => ID.id === `${user}`);
+    const duplicateCheck = UserData[0].scrap.some((item) => item === imgURL);
+    if (duplicateCheck === true) {
+      res.send({ ok: false, error: "이미 저장된 이미지 입니다." });
+    } else {
+      UserData[0].scrap.push(imgURL);
+      fs.writeFileSync("data_json.json", JSON.stringify(dataJson));
+      res.send({ ok: true, message: "저장에 성공하였습니다." });
+    }
   }
 });
 
