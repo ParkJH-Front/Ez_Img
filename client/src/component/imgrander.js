@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import "../css/imgrander.css";
+import Loding from "../img/Rhombus.gif";
 
 function ImgRander(props) {
   /** useRef 모달 영역 및 모달 이미지 영역 DOM 캐치 */
@@ -11,12 +12,13 @@ function ImgRander(props) {
 
   /** imgURL 로드 시, error 발생 시 해당 element 출력안함 */
   const onErrorImg = (err) => {
-    err.target.parentElement.className = "error";
+    err.target.remove();
+    // err.target.parentElement.className = "error";
   };
 
   /** 다운로드 버튼 클릭 시 이미지 다운로드 기능 */
   function downloadHandler(imgURL) {
-    // alert("CORS 문제 해결 후 기능 구현 예정 ~ '༼ つ ◕_◕ ༽つ");
+    alert("CORS 문제 해결 후 기능 구현 예정 ~ '༼ つ ◕_◕ ༽つ");
   }
 
   /** 모달을 열고, 닫고 핸들링 하는 로직 */
@@ -70,28 +72,39 @@ function ImgRander(props) {
       });
   };
 
+  // 로딩 이미지
+  const onLoad = (event) => {
+    console.log("로드완료?");
+  };
+  const tt1 = [];
+  const aa = propsData.map((arr) => arr.image_url);
+  const bb = aa.map((tt) => tt1);
+  console.log(bb);
   return (
-    <section className="layout_imgbox">
+    <section className="layout_imgbox" onLoad={onLoad}>
       <div className="column_imgBox">
+        <img className="center" src={Loding} alt="loding" />
         {propsData
           .map((arr) => arr.image_url)
-          .map((imgSrc, index) => (
-            <div className="box">
-              <img
-                className="rander_img"
-                src={imgSrc}
-                key={index}
-                onError={onErrorImg}
-              />
-              <div className="imgIcon">
-                <button onClick={() => onScrap(imgSrc)}>스크랩</button>
-                <button onClick={() => openModal(imgSrc)}>크게보기</button>
-                <button type="button" onClick={() => downloadHandler(imgSrc)}>
-                  다운로드
-                </button>
+          .map((imgSrc, index) => {
+            return (
+              <div className="box">
+                <img
+                  className="rander_img"
+                  src={imgSrc}
+                  key={index}
+                  onError={onErrorImg}
+                />
+                <div className="imgIcon">
+                  <button onClick={() => onScrap(imgSrc)}>스크랩</button>
+                  <button onClick={() => openModal(imgSrc)}>크게보기</button>
+                  <button type="button" onClick={() => downloadHandler(imgSrc)}>
+                    다운로드
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         <div className=" close" onClick={bgClick} ref={modalRef}>
           <div className="modal">
             <div className="column modalShow">

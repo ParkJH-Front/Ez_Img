@@ -1,7 +1,8 @@
-import { useEffect, useState, Component, Suspense, lazy } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "./nav";
 import Loding from "../img/Rhombus.gif";
+import ImgRander from "./imgrander";
 import "../css/main.css";
 
 function Main() {
@@ -34,13 +35,13 @@ function Main() {
       });
   }
 
-  /** 지연로딩 3000ms */
-  const ImgRander = lazy(() => {
-    return Promise.all([
-      import("./imgrander"),
-      new Promise((resolve) => setTimeout(resolve, 1000)),
-    ]).then(([moduleExports]) => moduleExports);
-  });
+  // /** 지연로딩 3000ms */
+  // const ImgRander = lazy(() => {
+  //   return Promise.all([
+  //     import("./imgrander"),
+  //     new Promise((resolve) => setTimeout(resolve, 1000)),
+  //   ]).then(([moduleExports]) => moduleExports);
+  // });
 
   // 맨위로 올라가는 버튼
   const onClick = (event) => {
@@ -50,12 +51,11 @@ function Main() {
   return (
     <div>
       <Nav />
-      <Suspense fallback={<img className="center" src={Loding} alt="loding" />}>
-        <h1 className="result">
-          {param} 검색결과 : {imgCount}
-        </h1>
-        <ImgRander imgURL={imgURL} />
-      </Suspense>
+      {/* <img className="center" src={Loding} alt="loding" /> */}
+      <h1 className="result">
+        {param} 검색결과 : {imgCount}
+      </h1>
+      <ImgRander imgURL={imgURL} />
       <div>
         <button onClick={onClick} className="up_scroll">
           맨위로
