@@ -15,22 +15,6 @@ function ImgRander(props) {
     // err.target.parentElement.className = "error";
   };
 
-  /** 다운로드 버튼 클릭 시 이미지 다운로드 기능 */
-  function downloadHandler(imgURL) {
-    // alert("CORS 문제 해결 후 기능 구현 예정 ~ '༼ つ ◕_◕ ༽つ");
-    const URL = "http://localhost:4000/download";
-    const aa = imgURL;
-    fetch(URL, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        URL: imgURL,
-      }),
-    });
-  }
-
   /** 모달을 열고, 닫고 핸들링 하는 로직 */
   const openModal = (img) => {
     modalImgRef.current.src = img;
@@ -81,6 +65,22 @@ function ImgRander(props) {
         }
       });
   };
+
+  /** 다운로드 버튼 클릭 시 이미지 다운로드 기능 */
+  function downloadHandler(imgURL) {
+    // alert("CORS 문제 해결 후 기능 구현 예정 ~ '༼ つ ◕_◕ ༽つ");
+    const URL = "http://localhost:4000/download";
+    const aa = imgURL;
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        URL: imgURL,
+      }),
+    });
+  }
 
   // 로딩 이미지
   // const onLoad = (event) => {

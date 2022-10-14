@@ -123,20 +123,22 @@ app.get("/search", (req, res) => {
 });
 
 //이미지 다운로드 로직
+const router = express.Router();
 
-app.post("/download", (req, res) => {
+router.post("/download", (req, res, next) => {
   const URL = req.body.URL;
   console.log(URL);
-  function download(u, p) {
-    return fetch(u, {
+  function download(URL, fileName) {
+    return fetch(URL, {
       method: "GET",
       headers: { "Content-Type": "application/octet-stream" },
     })
       .then((res) => res.buffer())
-      .then((_) => {
-        fs.writeFile(p, _, "binary", function (err) {
-          console.log(err || p);
+      .then((data) => {
+        fs.writeFile(`./temp/${fileName}`, data, "binary", function (err) {
+          console.log(err || fileName);
         });
+        res.download("./temt", fileName);
       });
   }
   download(URL, URL.split("/").reverse()[0]);
