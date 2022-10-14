@@ -14,6 +14,8 @@ const { json } = require("body-parser");
 
 const port = 4000;
 
+const fetch = require("node-fetch");
+
 // json data file read
 const dataBuffer = fs.readFileSync(__dirname + "/data_json.json");
 const datalow = dataBuffer.toString();
@@ -104,7 +106,42 @@ app.post("/scrap", (req, res) => {
   }
 });
 
+//외부 API 연결
+
+app.get("/search", (req, res) => {
+  const keyword = req.query.keyword;
+  let URL = `https://dapi.kakao.com/v2/search/image?query=${keyword}`;
+  fetch(URL, {
+    headers: {
+      Authorization: "KakaoAK 17d6f89d24fa2565f0e7155dc37188f0",
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      res.send(json);
+    });
+});
+
 //이미지 다운로드 로직
+
+app.post("/download", (req, res) => {
+  const URL = req.body.URL;
+  console.log(URL);
+  function download(u, p) {
+    return fetch(u, {
+      method: "GET",
+      headers: { "Content-Type": "application/octet-stream" },
+    })
+      .then((res) => res.buffer())
+      .then((_) => {
+        fs.writeFile(p, _, "binary", function (err) {
+          console.log(err || p);
+        });
+      });
+  }
+  download(URL, URL.split("/").reverse()[0]);
+});
+
 // 1. 이미지 다운로드 버튼 클릭 시 외부(kakao) url 접근
 // 2. 접근 후 이미지를 local 에 download
 // 3. 사용자(클라이언트) 에게 해당 파일 다운로드 할 수 있도록 전달
@@ -122,12 +159,3 @@ app.post("/scrap", (req, res) => {
 app.listen(port, () => {
   console.log("express active");
 });
-
-// 배포 과정 (자동배포)
-// hosting : heroku
-// 0. client 폴더로 이동
-// 1. npm ci (node_module 폴더 생성)
-// 2. npm run build (build 파일 생성)
-// 3. server 폴더로 이동
-// 4. npm ci
-// 5. node server.js 실행

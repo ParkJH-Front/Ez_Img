@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "./nav";
 import Loding from "../img/Rhombus.gif";
@@ -18,10 +18,11 @@ function Main() {
 
   /** 이미지 검색 API, input: word(string) return: json.data */
   function APIHandler(keyword) {
-    let URL = `https://dapi.kakao.com/v2/search/image?query=${keyword}`;
+    let URL = `http://localhost:4000/search?keyword=${keyword}`;
     fetch(URL, {
+      method: "GET",
       headers: {
-        Authorization: "KakaoAK 17d6f89d24fa2565f0e7155dc37188f0",
+        "content-type": "application/json",
       },
     })
       .then((res) => res.json())
@@ -31,17 +32,16 @@ function Main() {
             return item;
           })
         );
-        setImgCount(json.documents.length);
       });
   }
 
-  // /** 지연로딩 3000ms */
-  // const ImgRander = lazy(() => {
-  //   return Promise.all([
-  //     import("./imgrander"),
-  //     new Promise((resolve) => setTimeout(resolve, 1000)),
-  //   ]).then(([moduleExports]) => moduleExports);
-  // });
+  /** 지연로딩 3000ms */
+  const ImgRander = lazy(() => {
+    return Promise.all([
+      import("./imgrander"),
+      new Promise((resolve) => setTimeout(resolve, 5000)),
+    ]).then(([moduleExports]) => moduleExports);
+  });
 
   // 맨위로 올라가는 버튼
   const onClick = (event) => {
@@ -51,16 +51,16 @@ function Main() {
   return (
     <div>
       <Nav />
-      {/* <img className="center" src={Loding} alt="loding" /> */}
-      <h1 className="result">
-        {param} 검색결과 : {imgCount}
-      </h1>
-      <ImgRander imgURL={imgURL} />
-      <div>
-        <button onClick={onClick} className="up_scroll">
-          맨위로
-        </button>
-      </div>
+      <img className="center" src={Loding} alt="loding" />
+      <Suspense>
+        <h1 className="result">{param} 검색결과</h1>
+        <ImgRander imgURL={imgURL} />
+        <div>
+          <button onClick={onClick} className="up_scroll">
+            맨위로
+          </button>
+        </div>
+      </Suspense>
     </div>
   );
 }

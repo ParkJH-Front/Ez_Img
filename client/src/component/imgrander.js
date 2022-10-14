@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import "../css/imgrander.css";
-import Loding from "../img/Rhombus.gif";
 
 function ImgRander(props) {
   /** useRef 모달 영역 및 모달 이미지 영역 DOM 캐치 */
@@ -18,7 +17,18 @@ function ImgRander(props) {
 
   /** 다운로드 버튼 클릭 시 이미지 다운로드 기능 */
   function downloadHandler(imgURL) {
-    alert("CORS 문제 해결 후 기능 구현 예정 ~ '༼ つ ◕_◕ ༽つ");
+    // alert("CORS 문제 해결 후 기능 구현 예정 ~ '༼ つ ◕_◕ ༽つ");
+    const URL = "http://localhost:4000/download";
+    const aa = imgURL;
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        URL: imgURL,
+      }),
+    });
   }
 
   /** 모달을 열고, 닫고 핸들링 하는 로직 */
@@ -73,17 +83,16 @@ function ImgRander(props) {
   };
 
   // 로딩 이미지
-  const onLoad = (event) => {
-    console.log("로드완료?");
-  };
-  const tt1 = [];
-  const aa = propsData.map((arr) => arr.image_url);
-  const bb = aa.map((tt) => tt1);
-  console.log(bb);
+  // const onLoad = (event) => {
+  //   console.log("로드완료?");
+  // };
+  // const tt1 = [];
+  // const aa = propsData.map((arr) => arr.image_url);
+  // const bb = aa.map((tt) => tt1);
+  // console.log(bb);
   return (
-    <section className="layout_imgbox" onLoad={onLoad}>
+    <section className="layout_imgbox">
       <div className="column_imgBox">
-        <img className="center" src={Loding} alt="loding" />
         {propsData
           .map((arr) => arr.image_url)
           .map((imgSrc, index) => {
