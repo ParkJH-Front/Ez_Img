@@ -123,11 +123,12 @@ app.get("/search", (req, res) => {
 });
 
 //이미지 다운로드 로직
-const router = express.Router();
+// const router = express.Router();
 
-router.post("/download", (req, res, next) => {
+const Blob = require("buffer");
+
+app.post("/download", (req, res) => {
   const URL = req.body.URL;
-  console.log(URL);
   function download(URL, fileName) {
     return fetch(URL, {
       method: "GET",
@@ -138,16 +139,19 @@ router.post("/download", (req, res, next) => {
         fs.writeFile(`./temp/${fileName}`, data, "binary", function (err) {
           console.log(err || fileName);
         });
-        res.download("./temt", fileName);
+        res.sendFile(`${__dirname}/temp/${fileName}`);
+        // res.download("./temp", fileName);
       });
   }
   download(URL, URL.split("/").reverse()[0]);
 });
 
-// 1. 이미지 다운로드 버튼 클릭 시 외부(kakao) url 접근
-// 2. 접근 후 이미지를 local 에 download
-// 3. 사용자(클라이언트) 에게 해당 파일 다운로드 할 수 있도록 전달
-// 4. 지정된 시간 (약 60초) 뒤 이미지를 삭제
+// info 정보 로드
+app.post("/info", (req, res) => {
+  const user = req.body.userID;
+  const userdata = dataJson.Profiles.filter((ID) => ID.id === user);
+  res.send(userdata);
+});
 
 // react_build import
 // 1. build 에 있는 파일에 접근할 수 있도록 설정

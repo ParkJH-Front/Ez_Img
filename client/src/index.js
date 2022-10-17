@@ -5,6 +5,7 @@ import "./css/default.css";
 import Wellcome from "./component/wellcome";
 import Main from "./component/main";
 import Login from "./component/login";
+import Myinfo from "./component/myinfo";
 import Test from "./component/test";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -15,6 +16,7 @@ root.render(
       <Route path="/main:text" element={<Main />} />
       <Route path="/login" element={<Login />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/myinfo" element={<Myinfo />} />
     </Routes>
   </BrowserRouter>
 );

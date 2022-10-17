@@ -2,13 +2,11 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Nav from "./nav";
 import Loding from "../img/Rhombus.gif";
-import ImgRander from "./imgrander";
 import "../css/main.css";
 
 function Main() {
   /** API 통해 검색된 ImgURL */
   const [imgURL, setImgURL] = useState("");
-  const [imgCount, setImgCount] = useState();
 
   /** Nav component 전달 받은 parameter 를 API 에 전달하는 로직 */
   const param = useParams().text;
@@ -39,7 +37,7 @@ function Main() {
   const ImgRander = lazy(() => {
     return Promise.all([
       import("./imgrander"),
-      new Promise((resolve) => setTimeout(resolve, 5000)),
+      new Promise((resolve) => setTimeout(resolve, 2500)),
     ]).then(([moduleExports]) => moduleExports);
   });
 
@@ -51,8 +49,7 @@ function Main() {
   return (
     <div>
       <Nav />
-      <img className="center" src={Loding} alt="loding" />
-      <Suspense>
+      <Suspense fallback={<img className="center" src={Loding} alt="loding" />}>
         <h1 className="result">{param} 검색결과</h1>
         <ImgRander imgURL={imgURL} />
         <div>
