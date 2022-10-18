@@ -1,8 +1,7 @@
 import { useEffect, useState, useRef } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../css/nav.css";
 import logo from "../img/logo_nukki.png";
-import { useNavigate } from "react-router-dom";
 
 function Nav() {
   /** 로컬 스토리지 내 사용자 정보가 있는 경우, 로그인버튼 표기 X*/
@@ -36,8 +35,13 @@ function Nav() {
     }
   };
 
-  const onClick = (event) => {
+  const goToMain = (event) => {
     navigate(`/login`);
+  };
+
+  const goToInfo = (event) => {
+    console.log(event);
+    navigate(`/myinfo`);
   };
 
   // logout 버튼 클릭 시 기능구현
@@ -62,20 +66,24 @@ function Nav() {
             onChange={onChange}
             value={keyword}
             type="text"
-            placeholder="    이미지 검색"
+            placeholder=" 이미지 검색"
           ></input>
-          <button className="search_btn media-575">search</button>
+          <button className="search_btn">search</button>
         </form>
       </section>
       {/* 로그인기능 */}
       <section>
         <form>
-          <button className="login_btn" ref={loginBtnRef} onClick={onClick}>
+          <button className="login_btn" ref={loginBtnRef} onClick={goToMain}>
             login
           </button>
           <div className="none" ref={greetingRef}>
-            <p>환영합니다,{checkLogin}님.</p>
-            <button onClick={onLogout}>LogOut</button>
+            <button onClick={goToInfo} className="infoBtn">
+              <a>{checkLogin} to scrap</a>
+            </button>
+            <button className="logout" onClick={onLogout}>
+              LogOut
+            </button>
           </div>
         </form>
       </section>

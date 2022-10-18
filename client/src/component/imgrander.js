@@ -12,7 +12,6 @@ function ImgRander(props) {
   /** imgURL 로드 시, error 발생 시 해당 element 출력안함 */
   const onErrorImg = (err) => {
     err.target.remove();
-    // err.target.parentElement.className = "error";
   };
 
   /** 모달을 열고, 닫고 핸들링 하는 로직 */
@@ -68,9 +67,7 @@ function ImgRander(props) {
 
   /** 다운로드 버튼 클릭 시 이미지 다운로드 기능 */
   function downloadHandler(imgURL) {
-    // alert("CORS 문제 해결 후 기능 구현 예정 ~ '༼ つ ◕_◕ ༽つ");
     const URL = "http://localhost:4000/download";
-    const aa = imgURL;
     fetch(URL, {
       method: "POST",
       headers: {
@@ -82,41 +79,28 @@ function ImgRander(props) {
     })
       .then((res) => res.blob())
       .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        console.log(url);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "";
-        document.body.appendChild(a);
-        a.click();
-        setTimeout((_) => {
-          window.URL.revokeObjectURL(url);
-        }, 60000);
-        a.remove();
+        function urlcreate(blob) {
+          return new Promise((resolve) => {
+            const url = window.URL.createObjectURL(blob);
+            setTimeout(() => {
+              resolve(url);
+            }, 2500);
+          });
+        }
+        urlcreate(blob).then((url) => {
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "";
+          document.body.appendChild(a);
+          a.click();
+          setTimeout((_) => {
+            window.URL.revokeObjectURL(url);
+          }, 1000);
+          a.remove();
+        });
       });
   }
 
-  // const exportTxt = useCallback(() => {
-  //   let fileName = "파일이름.txt";
-  //   let output = "string 타입의 데이터";
-  //   const element = document.createElement("a");
-  //   const file = new Blob([output], {
-  //     type: "text/plain",
-  //   });
-  //   element.href = URL.createObjectURL(file);
-  //   element.download = fileName;
-  //   document.body.appendChild(element); // FireFox
-  //   element.click();
-  // }, []);
-
-  // 로딩 이미지
-  // const onLoad = (event) => {
-  //   console.log("로드완료?");
-  // };
-  // const tt1 = [];
-  // const aa = propsData.map((arr) => arr.image_url);
-  // const bb = aa.map((tt) => tt1);
-  // console.log(bb);
   return (
     <section className="layout_imgbox">
       <div className="column_imgBox">
@@ -144,7 +128,7 @@ function ImgRander(props) {
         <div className=" close" onClick={bgClick} ref={modalRef}>
           <div className="modal">
             <div className="column modalShow">
-              <img ref={modalImgRef}></img>
+              <img className="modalImg" ref={modalImgRef}></img>
               <button className="modalBtn" onClick={closeModal}>
                 X
               </button>

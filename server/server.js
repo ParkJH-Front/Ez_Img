@@ -15,6 +15,8 @@ const { json } = require("body-parser");
 const port = 4000;
 
 const fetch = require("node-fetch");
+const { resolve } = require("path");
+const { rejects } = require("assert");
 
 // json data file read
 const dataBuffer = fs.readFileSync(__dirname + "/data_json.json");
@@ -124,9 +126,6 @@ app.get("/search", (req, res) => {
 
 //이미지 다운로드 로직
 // const router = express.Router();
-
-const Blob = require("buffer");
-
 app.post("/download", (req, res) => {
   const URL = req.body.URL;
   function download(URL, fileName) {
@@ -136,11 +135,17 @@ app.post("/download", (req, res) => {
     })
       .then((res) => res.buffer())
       .then((data) => {
-        fs.writeFile(`./temp/${fileName}`, data, "binary", function (err) {
-          console.log(err || fileName);
+        new Promise((resolve, rejects) => {
+          fs.writeFile(`./temp/${fileName}`, data, "binary", function (err) {
+            console.log(err || fileName);
+          });
+          setTimeout(() => {
+            resolve();
+          }, 2500);
+        }).then(() => {
+          // res.send({ fileName: fileName });
+          res.sendFile(`${__dirname}/temp/${fileName}`);
         });
-        res.sendFile(`${__dirname}/temp/${fileName}`);
-        // res.download("./temp", fileName);
       });
   }
   download(URL, URL.split("/").reverse()[0]);
@@ -152,14 +157,6 @@ app.post("/info", (req, res) => {
   const userdata = dataJson.Profiles.filter((ID) => ID.id === user);
   res.send(userdata);
 });
-
-// react_build import
-// 1. build 에 있는 파일에 접근할 수 있도록 설정
-////app.use(express.static("build"));
-// 2. "/"(루트) 접근 시 build/index.html 을 보여줄 수 있도록 설정
-// app.get("/", (req, res) => {
-//   res.sendFile(__dirname + "/build/index.html");
-// });
 
 // http listen port 생성 서버 실행
 app.listen(port, () => {

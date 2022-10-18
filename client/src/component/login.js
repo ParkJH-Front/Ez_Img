@@ -32,7 +32,6 @@ function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.ok);
         if (data.ok === false) {
           alert(`${data.error}`);
         } else {
@@ -84,7 +83,6 @@ function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.ok === true) {
           alert("회원가입 완료, 다시 로그인하세요.");
           navigate("/");
