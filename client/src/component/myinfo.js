@@ -6,7 +6,7 @@ import "../css/main.css";
 function MyInfo() {
   // 사용자 페이지
   const [scrapImgArr, setScrapImgArr] = useState([]);
-  const APISERVER = "http://localhost:4000";
+  const APISERVER = "http://54.241.119.165:4000";
   const USERNAME = "USERNAME";
   const USERID = localStorage.getItem(USERNAME);
 

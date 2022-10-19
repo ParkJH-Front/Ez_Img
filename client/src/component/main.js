@@ -16,7 +16,7 @@ function Main() {
 
   /** 이미지 검색 API, input: word(string) return: json.data */
   function APIHandler(keyword) {
-    let URL = `http://localhost:4000/search?keyword=${keyword}`;
+    let URL = `http://54.241.119.165:4000/search?keyword=${keyword}`;
     fetch(URL, {
       method: "GET",
       headers: {

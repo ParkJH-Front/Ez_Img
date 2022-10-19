@@ -42,7 +42,7 @@ function ImgRander(props) {
 
   /** 스크랩 버튼 클릭 시 URL 사용자에 저장 */
   const USERNAME = "USERNAME";
-  const APISERVER = "http://localhost:4000";
+  const APISERVER = "http://54.241.119.165:4000";
   const onScrap = (img) => {
     const user = localStorage.getItem(USERNAME);
     fetch(`${APISERVER}/scrap`, {
@@ -67,7 +67,7 @@ function ImgRander(props) {
 
   /** 다운로드 버튼 클릭 시 이미지 다운로드 기능 */
   function downloadHandler(imgURL) {
-    const URL = "http://localhost:4000/download";
+    const URL = "http://54.241.119.165:4000/download";
     fetch(URL, {
       method: "POST",
       headers: {

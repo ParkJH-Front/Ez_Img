@@ -9,7 +9,7 @@ import "../css/default.css";
 function Login() {
   const [userID, setUserID] = useState("");
   const [userPW, setUserPW] = useState("");
-  const APISERVER = "http://localhost:4000";
+  const APISERVER = "http://54.241.119.165:4000";
   const USERNAME = "USERNAME";
 
   // 로그인 점검 로직 성공 시 localStorage 내 ID 정보 저장.
